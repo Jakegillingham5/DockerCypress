@@ -12,6 +12,9 @@ RUN apt update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Server and Test
+RUN apt-get update && sudo apt-get -y install procps
+
 # PHP-related install
 RUN docker-php-ext-install bcmath && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
