@@ -34,6 +34,9 @@ RUN apt-get update && apt-get install -y libfreetype6-dev libjpeg-dev libpng-dev
 RUN docker-php-ext-install bcmath && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
+# Install wget
+RUN apt-get install wget
+
 # install Chromebrowser
 RUN \
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
