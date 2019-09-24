@@ -35,7 +35,7 @@ RUN docker-php-ext-install bcmath && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
 # Install wget
-RUN apt-get install wget
+RUN apt-get update && apt-get install -y gnupg2 && apt-get install wget
 
 # install Chromebrowser
 RUN \
