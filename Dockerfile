@@ -1,5 +1,8 @@
-FROM php:7.3
+FROM php:7.1.27-fpm
 LABEL maintainer="Jake Gillingham <jake.gillingham5@gmail.com>"
+
+# Configure PHP
+RUN echo "php_admin_flag[log_errors] = On">>/usr/local/etc/php-fpm.conf
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
@@ -12,12 +15,28 @@ RUN apt update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Server and Test
-RUN apt-get update && sudo apt-get -y install procps
+# Server and Test Dependency
+RUN apt-get update && apt-get -y install procps
+
+# Install GD -taken from Pickstar fpm dockerfile : to allow mysql migratation
+RUN apt-get update && apt-get install -y libfreetype6-dev libjpeg-dev libpng-dev libwebp-dev libfontconfig1 libxrender1 git zip mysql-client && \
+    docker-php-ext-configure gd \
+          --enable-gd-native-ttf \
+          --with-freetype-dir=/usr/include/freetype2 \
+          --with-jpeg-dir=/usr/lib \
+          --with-webp-dir=/usr/lib \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-install zip
 
 # PHP-related install
 RUN docker-php-ext-install bcmath && \
     curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+
+# Install Chrome
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy i
 
 # Node install
 ENV NODE_VERSION 10.13.0
