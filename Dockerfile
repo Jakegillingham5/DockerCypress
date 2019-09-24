@@ -9,6 +9,22 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 # PHP-related things
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
+# Node & Yarn install
+ENV NODE_VERSION 10.13.0
+ENV NVM_DIR /usr/local/nvm
+
+RUN mkdir ${NVM_DIR} && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash && \
+    . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+RUN npm install -g yarn
+
 # Cypress dependencies
 RUN apt update && \
     apt install libgtk-3-0 xvfb libgconf2-dev libxtst-dev libxss-dev libnss3 libasound2 -y --no-install-recommends && \
@@ -54,20 +70,5 @@ ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 
 RUN echo "Chrome version:  $(google-chrome --version) \n"
 
-# Node install
-ENV NODE_VERSION 10.13.0
-ENV NVM_DIR /usr/local/nvm
-
-RUN mkdir ${NVM_DIR} && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash && \
-    . $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default
-
-ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
-RUN npm install -g yarn
 
 WORKDIR /var/www
