@@ -40,14 +40,19 @@ RUN apt-get update && apt-get install -y gnupg2 && apt-get install wget
 # install Chromebrowser
 RUN \
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-  echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
-  apt-get update && \
-  apt-get install -y dbus-x11 google-chrome-stable && \
-  rm -rf /var/lib/apt/lists/*
+  echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+RUN apt-get update
+# disabled dbus install - could not get it to install
+# but tested an example project, and Chrome seems to run fine
+# RUN apt-get install -y dbus-x11
+RUN apt-get install -y google-chrome-stable
+RUN rm -rf /var/lib/apt/lists/*
 
 # "fake" dbus address to prevent errors
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+
+RUN echo "Chrome version:  $(google-chrome --version) \n"
 
 # Node install
 ENV NODE_VERSION 10.13.0
