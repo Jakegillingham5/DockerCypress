@@ -14,7 +14,6 @@ RUN apt update && \
 
 # PHP-related install
 RUN docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install pdo_pgsql \
     && docker-php-ext-install bcmath \
     && docker-php-ext-configure gd \
       --enable-gd-native-ttf \
