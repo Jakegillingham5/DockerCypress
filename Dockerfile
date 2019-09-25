@@ -1,4 +1,4 @@
-FROM php:7.3
+FROM php:7.1.27-fpm
 LABEL maintainer="Jake Gillingham <jake.gillingham5@gmail.com>"
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -13,10 +13,10 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 # PHP-related install
-RUN docker-php-ext-install bcmath \
-    && docker-php-ext-install mcrypt \
+RUN docker-php-ext-install mcrypt \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-install bcmath \
     && docker-php-ext-configure gd \
       --enable-gd-native-ttf \
       --with-jpeg-dir=/usr/lib \
