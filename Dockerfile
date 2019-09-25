@@ -32,7 +32,7 @@ ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Server and Test Dependency
-RUN apt-get update && apt-get -y install procps && apt-get -y install wget
+RUN apt-get update && apt-get -y install procps && apt-get -y install wget && apt-get install -y gnupg2
 
 # install Chromebrowser
 RUN \
