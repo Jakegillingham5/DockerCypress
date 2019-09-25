@@ -13,8 +13,18 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 # PHP-related install
-RUN docker-php-ext-install bcmath && \
-    curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+RUN docker-php-ext-install bcmath \
+    && docker-php-ext-install mcrypt \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-configure gd \
+      --enable-gd-native-ttf \
+      --with-jpeg-dir=/usr/lib \
+      --with-webp-dir=/usr/lib \
+      --with-freetype-dir=/usr/include/freetype2 \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install opcache \
+    && curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
 # Node install
 ENV NODE_VERSION 10.13.0
