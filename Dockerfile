@@ -9,7 +9,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 # Cypress dependencies w/mysql-client
 RUN apt update && \
     apt install libgtk-3-0 xvfb libgconf2-dev libxtst-dev libxss-dev libnss3 libasound2 -y --no-install-recommends && \
-    apt-get install -y mysql-client
+    apt-get install -y mysql-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
