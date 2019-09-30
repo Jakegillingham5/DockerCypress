@@ -13,7 +13,7 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 # PHP-related install
-RUN docker-php-ext-install pdo pdo_mysql mysqli \
+RUN docker-php-ext-install pdo_mysql mysql-client \
     && docker-php-ext-install bcmath \
     && curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
