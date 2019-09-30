@@ -1,4 +1,4 @@
-FROM php:7.3
+FROM php:7.1.27-fpm
 LABEL maintainer="Jake Gillingham <jake.gillingham5@gmail.com>"
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
