@@ -6,14 +6,14 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 # PHP-related things
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Cypress dependencies
+# Cypress dependencies w/mysql-client
 RUN apt update && \
-    apt install libgtk-3-0 xvfb libgconf2-dev libxtst-dev libxss-dev libnss3 libasound2 -y --no-install-recommends && \
+    apt install libgtk-3-0 xvfb libgconf2-dev libxtst-dev libxss-dev libnss3 libasound2 mysql-client -y --no-install-recommends && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # PHP-related install
-RUN docker-php-ext-install pdo_mysql mysql-client \
+RUN docker-php-ext-install pdo_mysql \
     && docker-php-ext-install bcmath \
     && curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
