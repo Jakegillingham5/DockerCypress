@@ -18,6 +18,9 @@ RUN docker-php-ext-install pdo_mysql \
     && docker-php-ext-install bcmath \
     && curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
+# Zip installation - 7.1
+RUN apt-get install php7.1-zip
+
 # Node install
 ENV NODE_VERSION 10.13.0
 ENV NVM_DIR /usr/local/nvm
