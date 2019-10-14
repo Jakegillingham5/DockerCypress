@@ -9,6 +9,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 # Cypress dependencies w/mysql-client
 RUN apt update && \
     apt install libgtk-3-0 xvfb libgconf2-dev libxtst-dev libxss-dev libnss3 libasound2 -y --no-install-recommends && \
+    apt-get install php7.1-zip && \
     apt-get install -y mysql-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -17,9 +18,6 @@ RUN apt update && \
 RUN docker-php-ext-install pdo_mysql \
     && docker-php-ext-install bcmath \
     && curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-
-# PHP Zip installation
-RUN apt-get install php-zip
 
 # Node install
 ENV NODE_VERSION 10.13.0
