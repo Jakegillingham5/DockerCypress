@@ -7,8 +7,9 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Cypress dependencies w/mysql-client
-RUN apt-add-repository ppa:ondrej/php && \
-    apt-get update && \
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:ondrej/php && \
     apt install libgtk-3-0 xvfb libgconf2-dev libxtst-dev libxss-dev libnss3 libasound2 -y --no-install-recommends && \
     apt-get install php7.1-zip && \
     apt-get install -y mysql-client && \
